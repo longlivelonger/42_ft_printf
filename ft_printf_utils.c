@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:25:14 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/05 18:02:41 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/05 18:30:02 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,25 @@ int	print_addr(void *n, int fd)
 	return (print_long_hex((unsigned long)n, 0, fd) + 2);
 }
 
-int	print_arg(char *s, va_list ap)
+int	print_arg(const char *s, int *i, va_list ap)
 {
-	if (s[0] == '%')
-		ft_putchar_fd('%', STDOUT_FILENO);
-	else if (s[0] == 'c')
-		ft_putchar_fd((unsigned char)va_arg(ap, int), STDOUT_FILENO);
-	else if (s[0] == 's')
-		return (print_str(va_arg(ap, char *), STDOUT_FILENO));
-	else if (s[0] == 'd' || s[0] == 'i' || s[0] == 'D')
-		return (print_num(va_arg(ap, int), STDOUT_FILENO));
-	else if (s[0] == 'u')
-		return (print_unsigned(va_arg(ap, unsigned int), STDOUT_FILENO));
-	else if (s[0] == 'p')
-		return (print_addr(va_arg(ap, void *), STDOUT_FILENO));
-	else if (s[0] == 'x')
-		return (print_hex(va_arg(ap, unsigned int), 0, STDOUT_FILENO));
-	else if (s[0] == 'X')
-		return (print_hex(va_arg(ap, unsigned int), 1, STDOUT_FILENO));
-	if (s[0] == '%' || s[0] == 'c')
+	if (s[*i] == '%')
+		ft_putchar_fd('%', 1);
+	else if (s[*i] == 'c')
+		ft_putchar_fd((unsigned char)va_arg(ap, int), 1);
+	else if (s[*i] == 's')
+		return (print_str(va_arg(ap, char *), 1));
+	else if (s[*i] == 'd' || s[*i] == 'i' || s[*i] == 'D')
+		return (print_num(va_arg(ap, int), 1));
+	else if (s[*i] == 'u')
+		return (print_unsigned(va_arg(ap, unsigned int), 1));
+	else if (s[*i] == 'p')
+		return (print_addr(va_arg(ap, void *), 1));
+	else if (s[*i] == 'x')
+		return (print_hex(va_arg(ap, unsigned int), 0, 1));
+	else if (s[*i] == 'X')
+		return (print_hex(va_arg(ap, unsigned int), 1, 1));
+	if (s[*i] == '%' || s[*i] == 'c')
 		return (1);
 	return (0);
 }
