@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:25:14 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/10/19 15:48:23 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/05 18:02:41 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,25 @@ int	print_addr(void *n, int fd)
 	return (print_long_hex((unsigned long)n, 0, fd) + 2);
 }
 
-int	print_arg(char c, va_list ap)
+int	print_arg(char *s, va_list ap)
 {
-	if (c == '%')
+	if (s[0] == '%')
 		ft_putchar_fd('%', STDOUT_FILENO);
-	else if (c == 'c')
+	else if (s[0] == 'c')
 		ft_putchar_fd((unsigned char)va_arg(ap, int), STDOUT_FILENO);
-	else if (c == 's')
+	else if (s[0] == 's')
 		return (print_str(va_arg(ap, char *), STDOUT_FILENO));
-	else if (c == 'd' || c == 'i' || c == 'D')
+	else if (s[0] == 'd' || s[0] == 'i' || s[0] == 'D')
 		return (print_num(va_arg(ap, int), STDOUT_FILENO));
-	else if (c == 'u')
+	else if (s[0] == 'u')
 		return (print_unsigned(va_arg(ap, unsigned int), STDOUT_FILENO));
-	else if (c == 'p')
+	else if (s[0] == 'p')
 		return (print_addr(va_arg(ap, void *), STDOUT_FILENO));
-	else if (c == 'x')
+	else if (s[0] == 'x')
 		return (print_hex(va_arg(ap, unsigned int), 0, STDOUT_FILENO));
-	else if (c == 'X')
+	else if (s[0] == 'X')
 		return (print_hex(va_arg(ap, unsigned int), 1, STDOUT_FILENO));
-	if (c == '%' || c == 'c')
+	if (s[0] == '%' || s[0] == 'c')
 		return (1);
 	return (0);
 }
