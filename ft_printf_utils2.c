@@ -6,11 +6,33 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:10:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/10/15 17:16:27 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/09 01:58:46 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+char	*make_string(char c, char *s)
+{
+	char	*new_str;
+	char	*temp;
+
+	new_str = malloc(2 * sizeof(*new_str));
+	if (new_str == 0)
+		return (0);
+	new_str[0] = c;
+	new_str[1] = '\0';
+	if (s == 0)
+		s = new_str;
+	else
+	{
+		temp = ft_strjoin(new_str, s);
+		free(new_str);
+		free(s);
+		s = temp;
+	}
+	return (s);
+}
 
 int	print_str(char *s, int fd)
 {
@@ -23,26 +45,28 @@ int	print_str(char *s, int fd)
 	return (ft_strlen(s));
 }
 
-int	print_num(int n, int fd)
+char	*get_num_rec(int n, char *s)
 {
 	int		digit;
 	char	c;
-	int		count;
 
-	count = 0;
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		count++;
-	}
 	digit = n % 10;
 	if (n < 0)
 		digit *= -1;
 	c = '0' + digit;
+	s = make_string(c, s);
 	if (n <= -10)
-		count += print_num((n / 10) * -1, fd);
+		s = get_num_rec((n / 10) * -1, s);
 	if (n >= 10)
-		count += print_num(n / 10, fd);
-	write(fd, &c, 1);
-	return (count + 1);
+		s = get_num_rec(n / 10, s);
+	return (s);
+}
+
+char	*get_num(int n, char *s)
+{
+	if (s == 0)
+		s = get_num_rec(n, s);
+	if (n < 0)
+		s = make_string('-', s);
+	return (s);
 }
