@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:25:14 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 01:55:10 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/09 02:32:49 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_unsigned(unsigned int n, char *s)
 
 	digit = n % 10;
 	c = '0' + digit;
-	s = make_string(c, s);
+	s = prepend_char(c, s);
 	if (n >= 10)
 		s = get_unsigned(n / 10, s);
 	return (s);
@@ -36,7 +36,7 @@ char	*get_hex(unsigned int n, int to_upper, char *s)
 		c = 'a' + digit - 10;
 	if (to_upper)
 		c = ft_toupper(c);
-	s = make_string(c, s);
+	s = prepend_char(c, s);
 	if (n >= 16)
 		s = get_hex(n / 16, to_upper, s);
 	return (s);
@@ -53,7 +53,7 @@ char	*get_long_hex(unsigned long n, int to_upper, char *s)
 		c = 'a' + digit - 10;
 	if (to_upper)
 		c = ft_toupper(c);
-	s = make_string(c, s);
+	s = prepend_char(c, s);
 	if (n >= 16)
 		s = get_long_hex(n / 16, to_upper, s);
 	return (s);
@@ -65,9 +65,11 @@ int	print_addr(void *n, int fd)
 	return (print_str(get_long_hex((unsigned long)n, 0, 0), fd) + 2);
 }
 
-int	print_arg(const char *s, int *i, va_list ap)
+int	print_arg(const char *s, int *i, va_list ap, t_flags *flags)
 {
-	if (s[*i] == '%')
+	if (ft_strchr("# +-.0123456789", s[*i]) && !flags->flags_parsed)
+		parse_flags((char *)s, *i, flags);
+	else if (s[*i] == '%')
 		ft_putchar_fd('%', 1);
 	else if (s[*i] == 'c')
 		ft_putchar_fd((unsigned char)va_arg(ap, int), 1);

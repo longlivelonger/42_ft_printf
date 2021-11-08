@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:56:21 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/05 18:30:15 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/09 02:38:09 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 static void	empty_flags(t_flags *flags)
 {
 	flags->flags_on = 0;
+	flags->flags_parsed = 0;
+	flags->sharp = 0;
+	flags->space = 0;
+	flags->minus = 0;
+	flags->plus = 0;
+	flags->zero = 0;
+	flags->min_width = 0;
+	flags->precision = -1;
 }
 
 static void	incr_hook(int count, int *count_ptr, t_flags *flags, char c)
@@ -39,8 +47,8 @@ int	ft_printf(const char *s, ...)
 	i = -1;
 	while (s[++i] != '\0')
 	{
-		if (flags.flags_on && ft_strchr("cspdiuxX%# +-0.", s[i]))
-			incr_hook(print_arg(s, &i, ap), &count, &flags, s[i]);
+		if (flags.flags_on && ft_strchr("cspdiuxX%# +-.0123456789", s[i]))
+			incr_hook(print_arg(s, &i, ap, &flags), &count, &flags, s[i]);
 		else if (s[i] == '%')
 			flags.flags_on = 1;
 		else

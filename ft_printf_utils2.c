@@ -6,13 +6,13 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:10:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 01:58:46 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/09 02:04:01 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*make_string(char c, char *s)
+char	*prepend_char(char c, char *s)
 {
 	char	*new_str;
 	char	*temp;
@@ -54,7 +54,7 @@ char	*get_num_rec(int n, char *s)
 	if (n < 0)
 		digit *= -1;
 	c = '0' + digit;
-	s = make_string(c, s);
+	s = prepend_char(c, s);
 	if (n <= -10)
 		s = get_num_rec((n / 10) * -1, s);
 	if (n >= 10)
@@ -67,6 +67,6 @@ char	*get_num(int n, char *s)
 	if (s == 0)
 		s = get_num_rec(n, s);
 	if (n < 0)
-		s = make_string('-', s);
+		s = prepend_char('-', s);
 	return (s);
 }
