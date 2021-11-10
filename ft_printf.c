@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:56:21 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 02:38:09 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 18:09:44 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	empty_flags(t_flags *flags)
 	flags->zero = 0;
 	flags->min_width = 0;
 	flags->precision = -1;
+	flags->len_plus_one = 0;
 }
 
 static void	incr_hook(int count, int *count_ptr, t_flags *flags, char c)

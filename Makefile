@@ -6,7 +6,7 @@
 #    By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/14 21:02:22 by sbronwyn          #+#    #+#              #
-#    Updated: 2021/10/15 17:11:42 by sbronwyn         ###   ########.fr        #
+#    Updated: 2021/11/10 19:19:37 by sbronwyn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libftprintf.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_printf.c ft_printf_utils.c ft_printf_utils2.c
+SRC = ft_printf.c utils.c utils2.c utils3.c utils4.c flags.c
 
 MAKE_LIBFT = make -C libft
 LIBFT = libft/libft.a
@@ -42,7 +42,9 @@ fclean: clean
 
 re: fclean all
 
+bonus: all
+
 $(LIBFT):
 	$(MAKE_LIBFT) bonus
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean bonus
