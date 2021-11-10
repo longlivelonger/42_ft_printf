@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:10:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/10 14:24:40 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:57:31 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ char	*prepend_char(char c, char *s)
 	return (s);
 }
 
-int	print_str(char *s, int fd)
+int	print_str(char *s, char c, int fd)
 {
+	int	len;
+
 	if (s == 0)
-	{
-		write(fd, "(null)", 6);
-		return (6);
-	}
-	write(fd, s, ft_strlen(s));
-	return (ft_strlen(s));
+		return (0);
+	len = ft_strlen(s);
+	if (c == 'c' && len == 0)
+		len = 1;
+	write(fd, s, len);
+	free(s);
+	return (len);
 }
 
 char	*get_num_rec(int n, char *s)

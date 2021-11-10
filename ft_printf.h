@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:54:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/10 14:06:50 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:51:40 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ int		print_arg(const char *s, int *i, va_list ap, t_flags *flags);
 
 char	*prepend_str(char *new_str, char *s);
 char	*prepend_char(char c, char *s);
-int		print_str(char *s, int fd);
+int		print_str(char *s, char c, int fd);
 char	*get_num(int n, char *s);
+
+char	*get_str(char *s);
 
 void	parse_flags(char *s, int i, t_flags *flags);
 

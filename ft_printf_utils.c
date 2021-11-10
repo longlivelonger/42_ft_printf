@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:25:14 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/10 14:09:19 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:51:54 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	print_arg(const char *s, int *i, va_list ap, t_flags *flags)
 	else if (s[*i] == 'c')
 		str = prepend_char((unsigned char)va_arg(ap, int), str);
 	else if (s[*i] == 's')
-		str = va_arg(ap, char *);
+		str = get_str(va_arg(ap, char *));
 	else if (s[*i] == 'd' || s[*i] == 'i' || s[*i] == 'D')
 		str = get_num(va_arg(ap, int), 0);
 	else if (s[*i] == 'u')
@@ -91,7 +91,5 @@ int	print_arg(const char *s, int *i, va_list ap, t_flags *flags)
 		str = get_hex(va_arg(ap, unsigned int), 0, 0);
 	else if (s[*i] == 'X')
 		str = get_hex(va_arg(ap, unsigned int), 1, 0);
-	if (ft_strchr("cspdiuxX%", s[*i]))
-		return (print_str(str, 1));
-	return (0);
+	return (print_str(str, s[*i], 1));
 }
