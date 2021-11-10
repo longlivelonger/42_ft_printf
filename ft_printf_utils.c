@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:25:14 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 02:32:49 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:09:19 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,39 @@ char	*get_long_hex(unsigned long n, int to_upper, char *s)
 	return (s);
 }
 
-int	print_addr(void *n, int fd)
+char	*get_addr(void *n)
 {
-	write(fd, "0x", 2);
-	return (print_str(get_long_hex((unsigned long)n, 0, 0), fd) + 2);
+	char	*str;
+
+	str = get_long_hex((unsigned long)n, 0, 0);
+	str = prepend_str("0x", str);
+	return (str);
 }
 
 int	print_arg(const char *s, int *i, va_list ap, t_flags *flags)
 {
+	char	*str;
+
+	str = 0;
 	if (ft_strchr("# +-.0123456789", s[*i]) && !flags->flags_parsed)
 		parse_flags((char *)s, *i, flags);
 	else if (s[*i] == '%')
-		ft_putchar_fd('%', 1);
+		str = prepend_char('%', str);
 	else if (s[*i] == 'c')
-		ft_putchar_fd((unsigned char)va_arg(ap, int), 1);
+		str = prepend_char((unsigned char)va_arg(ap, int), str);
 	else if (s[*i] == 's')
-		return (print_str(va_arg(ap, char *), 1));
+		str = va_arg(ap, char *);
 	else if (s[*i] == 'd' || s[*i] == 'i' || s[*i] == 'D')
-		return (print_str(get_num(va_arg(ap, int), 0), 1));
+		str = get_num(va_arg(ap, int), 0);
 	else if (s[*i] == 'u')
-		return (print_str(get_unsigned(va_arg(ap, unsigned int), 0), 1));
+		str = get_unsigned(va_arg(ap, unsigned int), 0);
 	else if (s[*i] == 'p')
-		return (print_addr(va_arg(ap, void *), 1));
+		str = get_addr(va_arg(ap, void *));
 	else if (s[*i] == 'x')
-		return (print_str(get_hex(va_arg(ap, unsigned int), 0, 0), 1));
+		str = get_hex(va_arg(ap, unsigned int), 0, 0);
 	else if (s[*i] == 'X')
-		return (print_str(get_hex(va_arg(ap, unsigned int), 1, 0), 1));
-	if (s[*i] == '%' || s[*i] == 'c')
-		return (1);
+		str = get_hex(va_arg(ap, unsigned int), 1, 0);
+	if (ft_strchr("cspdiuxX%", s[*i]))
+		return (print_str(str, 1));
 	return (0);
 }

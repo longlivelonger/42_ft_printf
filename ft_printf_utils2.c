@@ -6,31 +6,34 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 17:10:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 02:04:01 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:24:40 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*prepend_char(char c, char *s)
+char	*prepend_str(char *new_str, char *s)
 {
-	char	*new_str;
 	char	*temp;
 
-	new_str = malloc(2 * sizeof(*new_str));
-	if (new_str == 0)
-		return (0);
-	new_str[0] = c;
-	new_str[1] = '\0';
 	if (s == 0)
-		s = new_str;
+		s = ft_strdup(new_str);
 	else
 	{
 		temp = ft_strjoin(new_str, s);
-		free(new_str);
 		free(s);
 		s = temp;
 	}
+	return (s);
+}
+
+char	*prepend_char(char c, char *s)
+{
+	char	new_str[2];
+
+	new_str[0] = c;
+	new_str[1] = '\0';
+	s = prepend_str((char *)&new_str, s);
 	return (s);
 }
 

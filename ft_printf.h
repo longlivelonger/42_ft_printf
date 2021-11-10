@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:54:57 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/09 02:38:11 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:06:50 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int		ft_printf(const char *s, ...);
 char	*get_unsigned(unsigned int n, char *s);
 char	*get_hex(unsigned int n, int to_upper, char *s);
 char	*get_long_hex(unsigned long n, int to_upper, char *s);
-int		print_addr(void *n, int fd);
+char	*get_addr(void *n);
 int		print_arg(const char *s, int *i, va_list ap, t_flags *flags);
 
+char	*prepend_str(char *new_str, char *s);
 char	*prepend_char(char c, char *s);
 int		print_str(char *s, int fd);
 char	*get_num(int n, char *s);
